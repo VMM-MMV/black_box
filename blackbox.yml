@@ -1,0 +1,30 @@
+modules:
+  otac_server_status:
+    prober: http
+    timeout: 5s
+    http:
+      method: GET
+      preferred_ip_protocol: "ip4"
+      valid_status_codes: [200]
+      fail_if_body_not_matches_regexp:
+        - 'serverStatus="running"'
+  
+  otac_content_status:
+    prober: http
+    timeout: 5s
+    http:
+      method: GET
+      preferred_ip_protocol: "ip4"
+      valid_status_codes: [200]
+      fail_if_body_not_matches_regexp:
+        - 'contRepStatus="running"'
+
+  python_script:
+    prober: http
+    timeout: 5s
+    http:
+      method: GET
+      preferred_ip_protocol: "ip4"
+      valid_status_codes: [200]
+      fail_if_body_not_matches_regexp:
+        - 'status="up"'

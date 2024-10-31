@@ -1,0 +1,29 @@
+groups:
+- name: OTAC Monitoring
+  rules:
+  - alert: OTACServerStatusNotRunning
+    expr: probe_success{job="otac_server_status"} == 0
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: "OTAC Server Status Not Running"
+      description: "The OTAC server status is not 'running' for more than 2 minutes."
+
+  - alert: OTACContentStatusNotRunning
+    expr: probe_success{job="otac_content_status"} == 0
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: "OTAC Content Repository Status Not Running"
+      description: "The OTAC content repository status is not 'running' for more than 2 minutes."
+
+  - alert: OTACEndpointUnreachable
+    expr: probe_http_status_code{job=~"otac_server_status|otac_content_status"} != 200
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: "OTAC Endpoint Unreachable"
+      description: "The OTAC endpoint is not responding with HTTP 200 for more than 2 minutes."

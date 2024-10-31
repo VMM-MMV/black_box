@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  flask_app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+
+  blackbox_exporter:
+    image: prom/blackbox-exporter:latest
+    volumes:
+      - ./blackbox.yml:/config/blackbox.yml
+    command:
+      - --config.file=/config/blackbox.yml
+    ports:
+      - "9115:9115"
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      # - ./rules:/etc/prometheus/rules
+    ports:
+      - "9090:9090"
