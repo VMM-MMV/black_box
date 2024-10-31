@@ -1,12 +1,5 @@
 version: '3.8'
 services:
-  flask_app:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
-
   blackbox_exporter:
     image: prom/blackbox-exporter:latest
     volumes:

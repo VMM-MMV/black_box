@@ -2,14 +2,14 @@ global:
   scrape_interval: 30s
   evaluation_interval: 30s
 
-rule_files:
-  - "rules/rules.yml"
+# rule_files:
+#   - "rules/rules.yml"
 
-alerting:
-  alertmanagers:
-    - static_configs:
-        - targets:
-           - alertmanager:9093
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets:
+#             - alertmanager:9093
 
 scrape_configs:
   - job_name: 'otac_server_status'
@@ -18,7 +18,13 @@ scrape_configs:
       module: [otac_server_status]
     static_configs:
       - targets:
-        - https://otac.sg70.opentext.cloud/archive?serverInfo&pVersion=0047&contRep=A1
+          - "https://otac.sg70.opentext.cloud/archive?serverInfo&pVersion=0047&contRep=A1"
+        labels:
+          environment: test
+      - targets:
+          - "https://otac.sg70.opentext.cloud/archive?serverInfo&pVersion=0047&contRep=A1&resultAs=html"
+        labels:
+          environment: prod
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
@@ -33,22 +39,9 @@ scrape_configs:
       module: [otac_content_status]
     static_configs:
       - targets:
-        - https://otac.sg70.opentext.cloud/archive?serverInfo&pVersion=0047&contRep=A1
-    relabel_configs:
-      - source_labels: [__address__]
-        target_label: __param_target
-      - source_labels: [__param_target]
-        target_label: instance
-      - target_label: __address__
-        replacement: blackbox_exporter:9115
-
-  - job_name: 'python_script'
-    metrics_path: /probe
-    params:
-      module: [python_script]
-    static_configs:
-      - targets:
-        - http://flask_app:5000/
+          - "https://otac.sg70.opentext.cloud/archive?serverInfo&pVersion=0047&contRep=A1"
+        labels:
+          environment: test
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
