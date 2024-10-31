@@ -17,4 +17,4 @@ modules:
       preferred_ip_protocol: "ip4"
       valid_status_codes: [200]
       fail_if_body_not_matches_regexp:
-        - "contRepStatus=\"running\"|<tr class='ali_tr'><td class='ali_vlabel'>Status</td><td class='ali_data'>running</td></tr>"
+        - 'contRepStatus=\"running\"'

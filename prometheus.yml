@@ -18,11 +18,11 @@ scrape_configs:
       module: [otac_server_status]
     static_configs:
       - targets:
-          - "https://otac.sg70.opentext.cloud/archive?serverInfo&pVersion=0047&contRep=A1"
+          - "https://otac.sg70-test.opentext.cloud/archive?serverInfo&pVersion=0047&contRep=A1"
         labels:
           environment: test
       - targets:
-          - "https://otac.sg70.opentext.cloud/archive?serverInfo&pVersion=0047&contRep=A1&resultAs=html"
+          - "https://otac.sg70.opentext.cloud/archive?serverInfo&pVersion=0047&contRep=A1"
         labels:
           environment: prod
     relabel_configs:
@@ -39,9 +39,13 @@ scrape_configs:
       module: [otac_content_status]
     static_configs:
       - targets:
-          - "https://otac.sg70.opentext.cloud/archive?serverInfo&pVersion=0047&contRep=A1"
+          - "https://otac.sg70-test.opentext.cloud/archive?serverInfo&pVersion=0047&contRep=A1"
         labels:
           environment: test
+      - targets:
+          - "https://otac.sg70.opentext.cloud/archive?serverInfo&pVersion=0047&contRep=A1"
+        labels:
+          environment: prod
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
